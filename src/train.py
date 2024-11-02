@@ -43,3 +43,9 @@ if __name__ == '__main__':
         image_size=config.IMAGE_SIZE,
         image_dimension=(128, 128, 3)
     )
+
+    print(f'Training accuracy: {train_accuracy}')
+
+    print(f'Validation accuracy: {validation_accuracy}')
+
+    print(history.history)
