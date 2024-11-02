@@ -1,0 +1,6 @@
+EPOCHS = 10
+BATCH_SIZE = 32
+IMAGE_WIDTH = 128
+IMAGE_HEIGHT = 128
+TRAIN_DATA_DIR = '../data/train'
+VALIDATION_DATA_DIR = '../data/valid'
