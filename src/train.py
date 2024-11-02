@@ -20,9 +20,26 @@ def run_training(train_data_dir, validate_data_dir, batch_size, epochs, image_si
     # Train the model
     history = model.fit(training_dataset, epochs=epochs, validation_data=validation_dataset)
 
-    return history
+    # Evaluate the model based on the training data
+    train_loss, train_accuracy = model.evaluate(training_dataset)
+
+    # Evaluate the model based on the validation data
+    validation_loss, validation_accuracy = model.evaluate(validation_dataset)
+
+    # Save the model
+    model.save('trained_plant_disease_model.keras')
+    print(f'Model saved to trained_plant_disease_model.keras')
+
+    return history, train_loss, train_accuracy, validation_loss, validation_accuracy
 
 
 if __name__ == '__main__':
     # print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
-    training_history = run_training(config.TRAIN_DATA_DIR, config.VALIDATION_DATA_DIR, config.BATCH_SIZE, config.EPOCHS, config.IMAGE_SIZE, image_dimension=(128, 128, 3))
+    history, train_loss, train_accuracy, validation_loss, validation_accuracy = run_training(
+        train_data_dir=config.TRAIN_DATA_DIR,
+        validate_data_dir=config.VALIDATION_DATA_DIR,
+        batch_size=config.BATCH_SIZE,
+        epochs=config.EPOCHS,
+        image_size=config.IMAGE_SIZE,
+        image_dimension=(128, 128, 3)
+    )
