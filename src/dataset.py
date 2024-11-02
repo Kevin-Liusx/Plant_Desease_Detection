@@ -1,7 +1,5 @@
 import tensorflow as tf
 
-import config
-
 def load_image_dataset(image_paths, image_size, batch_size):
     dataset = tf.keras.utils.image_dataset_from_directory(
         image_paths,
