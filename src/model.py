@@ -1,8 +1,8 @@
 import tensorflow as tf
 
 class CNN(tf.keras.Model):
-    def __init__(self, num_classes=38):
-        super(CNN, self).__init__()
+    def __init__(self, num_classes=38, **kwargs):
+        super(CNN, self).__init__(**kwargs)
         self.conv1a = tf.keras.layers.Conv2D(32, kernel_size=3, padding='same', activation='relu') 
         self.conv1b = tf.keras.layers.Conv2D(32, kernel_size=3, activation='relu')
         self.pool1 = tf.keras.layers.MaxPooling2D(pool_size=(2, 2), strides=2)
@@ -28,6 +28,17 @@ class CNN(tf.keras.Model):
         self.dense = tf.keras.layers.Dense(1500, activation='relu')
         self.dropout2 = tf.keras.layers.Dropout(0.4)
         self.output_layer = tf.keras.layers.Dense(num_classes, activation='softmax')
+
+    def get_config(self):
+        # Return the config of the model, allowing for re-creation
+        config = super(CNN, self).get_config()
+        config.update({"num_classes": self.output_layer.units})
+        return config
+
+    @classmethod
+    def from_config(cls, config):
+        # Recreate an instance of the model from the config
+        return cls(**config)
 
     def call(self, x):
         x = self.conv1a(x)
